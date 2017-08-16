@@ -78,8 +78,6 @@ func UpdateUser(w http.ResponseWriter, r *http.Request, params url.Values) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
 	if u.Id > 0 {
-		w.WriteHeader(http.StatusNotFound)
-	} else {
 		var user User
 		err := json.NewDecoder(r.Body).Decode(&user)
 
@@ -98,6 +96,8 @@ func UpdateUser(w http.ResponseWriter, r *http.Request, params url.Values) {
 		if err := json.NewEncoder(w).Encode(u); err != nil {
 			panic(err)
 		}
+	} else {
+		w.WriteHeader(http.StatusNotFound)
 	}
 }
 
